@@ -64,4 +64,17 @@ router.get("/download/:filename", (req: Request, res: Response) => {
   }
 });
 
+router.delete("/delete/:filename", (req: Request, res: Response) => {
+  try {
+    const filename = req.params.filename;
+
+    const location = path.join(process.cwd(), "temp", filename);
+    fs.unlink(location, () => {
+      res.json({ done: true });
+    });
+  } catch (err) {
+    res.json({ done: false, err });
+  }
+});
+
 export default router;
